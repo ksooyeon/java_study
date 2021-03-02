@@ -86,3 +86,102 @@ public class Main {
 
 
 #### 5. 변수의 스코프와 라이프타임  
+- 스코프(Scope) : 변수의 사용 가능 범위.  
+  변수가 선언 된 클래스의 중괄호 내에서 사용 가능하다.  
+  
+```java
+public class Scope {
+  static int var1;        //Scope 클래스 내에서 사용 가능
+  public static void main(String[] args) {
+  
+        int var2;         //main 안에서만 사용 가능
+  }
+}
+```   
+
+- 라이프타임(Life Cycle) : 변수가 생성되고 죽는 것을 말한다.  
+  
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FczMkKK%2FbtqNQvTOx5C%2FIy0Cgy4pJVRLOt2GUS5S2k%2Fimg.png)  
+출처 : https://catch-me-java.tistory.com/18  
+  
+    * 전역변수 : 객체가 생성될 때 변수가 생성. 참조가 없을 때 가비지 컬렉터가 객체를 지우면서 같이 소멸된다.
+    * 정적변수 : 클래스가 처음 호출 될 때 생성되며 어플리케이션 종료시 같이 소멸된다.
+    * 매개변수 : 매개변수가 전달되는 함수가 호출될 때 생성되며 종료 시 해당 매개변수명으로 소멸된다.
+    * 지역변수 : 해당 변수가 선언된 괄호 시작 지점에서 생성되며 괄호가 종료되는 시점에 소멸된다.  
+  
+
+------------
+
+
+#### 6. 타입 변환, 캐스팅 그리고 타입 프로모션  
+특정 데이터 타입으로 표현된 리터럴을 다른 데이터 타입으로 변환할 수 있다.  
+- 캐스팅 타입 : 자신의 표현 범위를 모두 포함하지 못한 데이터 타입으로 변환.(개발자가 명시해야 함)  
+    
+```java
+public class Casting {
+  public static void main(String[] args) {
+  
+       float v1 = 1.23f;
+       long v2 = v1;         //long은 8바이트, float은 4바이트로 메모리 할당 크기는 더 크지만 소수점 표현이 불가하므로 컴파일 오류
+        
+       long v3 = (long) v1;  //다음과 같이 명시적으로 기재해야 형변환 가능
+  }
+}
+```    
+      
+- 프로모션 타입 : 자신의 표현 범위를 모두 포함한 데이터 타입으로 변환.(자동으로 형변환)  
+  
+```java
+public class Promotion {
+  public static void main(String[] args) {
+  
+        long v1 = 123L;
+        float v2 = v1;    //원본 데이터가 손실되지 않으므로 자동으로 형변환 가능
+  }
+}
+```    
+
+
+------------
+
+
+#### 7. 1차 및 2차 배열 선언하기  
+  
+1차 배열 : 타입[] 배열이름 = new 타입[배열길이]; 배열 선언과 초기화 동시에 가능.  
+```java
+public class Array1 {
+  public static void main(String[] args) {
+  
+        int[] arr = new int[3];
+        int[] arr2 = {10, 20, 30};    //할당할 값이 정해져있다면 중괄호로 배열 객체 만들 수 있다.
+        int[] arr3;
+        arr3 = {40, 50, 60};          //컴파일 오류 발생. 배열 변수는 런타임 스택 영역에, 값은 가비지 컬렉션 힙 영역에 객체가 생성.
+                                      //선언 및 초기화 동시에 할 때만 사용할 수 있는 방법이다.
+  }
+}
+```  
+  
+2차 배열 : 타입[][] 배열이름 = new 타입[배열길이][배열길이]; 배열 선언과 초기화 동시에 가능.  
+```java
+public class Array1 {
+  public static void main(String[] args) {
+  
+        int[][] arr = new int[2][3];
+        int[][] arr2 = {{1,2}, {3,4,5}};
+  }
+}
+```  
+  
+------------
+
+
+#### 8. 타입 추론, var  
+  
+타입 추론(Type Interface) : 변수 타입을 명시하지 않고 컴파일러가 데이터 타입이 무엇인지 추론한다는 의미.
+
+var  
+- 지역변수에서만 사용 가능
+- 반드시 선언과 초기화 동시에 해야 한다
+- null로 초기화 시 작동하지 않는다
+- 람다 표현식에는 사용할 수 없다
+- 타입 없이 배열에 초기값을 넘겨도 작동하지 않는다  
