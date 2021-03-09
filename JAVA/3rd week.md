@@ -57,18 +57,33 @@ static public void main(String[] args) {
     int e = b << 1;     // 0011 왼쪽으로 한 칸 이동, 0110(6)
     int f = ~a;         // 0001 -> 1111 1111 1111 1111 1111 1111 111 1110
     
+    int g = -2147483648 >>> 1;
+    // 1000 0000 0000 0000 0000 0000 0000 0000 -> 0100 0000 0000 0000 0000 0000 0000 0000  
 }
 ```
 
   
 #### 3. 관계 연산자  
 ------------
-
+- 이항(Binary Operator)
+    - == : Equal to  
+    - != : Not equal to  
+    - '>'  : Greater than  
+    - <  : Less than  
+    - '>=' : Greater than or Equal to  
+    - <= : Less than or Equal to  
+ - 연산 결과는 boolean  
+  
 
 #### 4. 논리 연산자  
 
 ------------
-
+- 이항(Binary Operator)
+    - <mark>&&</mark> : logical AND  
+    - <mark>||</mark> : logical OR  
+ - 피연산자 타입은 boolean  
+ - 연산 결과 boolean  
+   
 
 #### 5. instanceof
 ------------
