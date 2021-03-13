@@ -183,7 +183,7 @@ class Operator {
 ```java
 class Test {
     public static void main(String[] args) {
-        int value = 3;
+        int value = 10;
         System.out.println(value == 10 ? (value *= 3) : (value -= 100));  // 30 출력
     }
 }
