@@ -168,7 +168,7 @@ while(it.hasNext()) {       // iterator에 요소가 있을 때까지
 
       @Test
       void githubConnectionTest() {
-          String token = "28a3397b2416fc79268d4df4230012d3ecff7f09";
+          String token = "PERSONAL_TOKEN";
           String repoName = "whiteship/live-study";
 
           List<Pair<String, Double>> rates = new ArrayList<>();
@@ -185,24 +185,24 @@ while(it.hasNext()) {       // iterator에 요소가 있을 때까지
     
   ![실행1](https://user-images.githubusercontent.com/34119641/111151921-7441e000-85d3-11eb-8d37-8224584f471b.JPG)  
     
-  
+------------------------------------------------------------------------------------------------------------------------  
 - 과제 2. LinkedList를 구현하세요.
   - LinkedList에 대해 공부하세요.
   - 정수를 저장하는 ListNode 클래스를 구현하세요.
   - ListNode add(ListNode head, ListNode nodeToAdd, int position)를 구현하세요.
   - ListNode remove(ListNode head, int positionToRemove)를 구현하세요.
   - boolean contains(ListNode head, ListNode nodeTocheck)를 구현하세요.
-  
+------------------------------------------------------------------------------------------------------------------------  
 - 과제 3. Stack을 구현하세요.
   - int 배열을 사용해서 정수를 저장하는 Stack을 구현하세요.
   - void push(int data)를 구현하세요.
   - int pop()을 구현하세요.
-  
+------------------------------------------------------------------------------------------------------------------------    
 - 과제 4. 앞서 만든 ListNode를 사용해서 Stack을 구현하세요.
   - ListNode head를 가지고 있는 ListNodeStack 클래스를 구현하세요.
   - void push(int data)를 구현하세요.
   - int pop()을 구현하세요.
-  
+------------------------------------------------------------------------------------------------------------------------    
 - 과제 5. Queue를 구현하세요.
   - 배열을 사용해서 한번
   - ListNode를 사용해서 한번.
