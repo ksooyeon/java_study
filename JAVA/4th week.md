@@ -191,19 +191,243 @@ while(it.hasNext()) {       // iterator에 요소가 있을 때까지
   - 정수를 저장하는 ListNode 클래스를 구현하세요.
   - ListNode add(ListNode head, ListNode nodeToAdd, int position)를 구현하세요.
   - ListNode remove(ListNode head, int positionToRemove)를 구현하세요.
-  - boolean contains(ListNode head, ListNode nodeTocheck)를 구현하세요.
+  - boolean contains(ListNode head, ListNode nodeTocheck)를 구현하세요.  
+  
+Linked List란? 연결리스트는 각 노드가 데이터와 포인터를 가지고 한 줄로 연결되어 있는 방식의 자료구조  
+중간에 데이터를 추가/삭제 하더라도 인덱스가 밀리는 일이 없어 ArrayList에 비해 데이터 변경이 용이하나 순차 탐색에는 시간이 걸림  
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbqsySc%2FbtqEk1stewE%2Ftnty2kV69c7l45eyUO3Jh0%2Fimg.png)  
+출처 : https://coding-factory.tistory.com/552  
+  
+  ListNode.java  
+  ```java
+  public class ListNode {
+    int data;
+    ListNode next;
+
+    public ListNode(int data, ListNode next) {
+        this.data = data;
+        this.next =  next;
+    }
+
+    public ListNode(int data) {
+        this.data = data;
+        this.next = null;
+    }
+  }
+  ```
+  LinkedList.java
+  ```java
+  public class LinkedList {
+    private ListNode head;
+
+    public LinkedList() {
+        this.head = null;
+    }
+
+    ListNode add(ListNode nodeToAdd, int position) {
+        if(head == null)
+            head = nodeToAdd;
+        else{
+            ListNode node = head;
+            for(int i=0;i<position-1;i++)
+                node = node.next;
+
+            nodeToAdd.next = node.next;
+            node.next = nodeToAdd;
+        }
+
+        return head;
+    }
+
+    public  ListNode remove(int positionToRemove) {
+        if(head == null)
+            return head;
+
+        if(positionToRemove == 0){
+            head = head.next;
+            return head;
+        }
+
+        ListNode node = head;
+        for(int i=0;i<positionToRemove-1;i++){
+            if(node == null)
+                return head;
+
+            node = node.next;
+        }
+        node.next = node.next.next;
+
+        return head;
+    }
+
+    boolean contains(ListNode nodeToCheck) {
+        ListNode node = head;
+        while(node != null){
+            if(node.data == nodeToCheck.data)
+                return true;
+
+            node = node.next;
+        }
+        return false;
+    }
+  }
+  ```
 ------------------------------------------------------------------------------------------------------------------------  
 - 과제 3. Stack을 구현하세요.
   - int 배열을 사용해서 정수를 저장하는 Stack을 구현하세요.
   - void push(int data)를 구현하세요.
-  - int pop()을 구현하세요.
+  - int pop()을 구현하세요.  
+   
+ Stack.java  
+ ```java
+ public class Stack {
+
+    private int array[];
+    private int top;
+    private int size;
+
+    public Stack(int size){
+        this.size = size;
+        this.array = new int[size];
+        this.top = -1;
+    }
+
+    void push(int data){
+        if(top == size-1)
+            throw new RuntimeException("out of index");
+
+        array[top++] = data;
+    }
+
+    int pop() {
+        if(top == -1)
+            throw new RuntimeException("out of index");
+
+        return array[top--];
+    }
+}
+ ```
 ------------------------------------------------------------------------------------------------------------------------    
 - 과제 4. 앞서 만든 ListNode를 사용해서 Stack을 구현하세요.
   - ListNode head를 가지고 있는 ListNodeStack 클래스를 구현하세요.
   - void push(int data)를 구현하세요.
-  - int pop()을 구현하세요.
+  - int pop()을 구현하세요.  
+   
+ListNodeStack.java  
+```java
+public class ListNodeStack {
+
+    private ListNode head;
+
+    public ListNodeStack() {
+        this.head = null;
+    }
+
+    void push(int data){
+        ListNode newNode = new ListNode(data);
+        if(head == null){
+            head = newNode;
+            return;
+        }
+
+        ListNode node = head;
+        while(node.next != null)
+            node = node.next;
+
+        node.next = newNode;
+    }
+
+    int pop(){
+        if(head == null)
+            throw new RuntimeException("out of index");
+
+        ListNode before = null;
+        ListNode node = head;
+
+        while(node.next != null){
+            before = node;
+            node = node.next;
+        }
+
+        int data = node.data;
+        if(before == null)
+            head = null;
+        else
+            before.next = null;
+
+        return data;
+    }
+  }
+```
 ------------------------------------------------------------------------------------------------------------------------    
 - 과제 5. Queue를 구현하세요.
-  - 배열을 사용해서 한번
+  - 배열을 사용해서 한번  
+    ```java
+    public class ArrayQueue {
+
+        private Integer array[];
+        private int front;
+        private int back;
+        private int size;
+
+        public ArrayQueue(int size) {
+            this.size = size;
+            this.array = new Integer[size];
+            this.front = -1;
+            this.back = -1;
+        }
+
+        void push(int data){
+            back++;
+            if(back >= size)
+                throw new ArrayIndexOutOfBoundsException();
+
+            array[back] = data;
+            if(front == -1)
+                front = back;
+        }
+
+        int pop() {
+            if(front >= size || front < 0)
+                throw new ArrayIndexOutOfBoundsException();
+
+            return array[front++];
+        }
+    }
+    ```
+    *배열로 큐를 구현할 경우 front, back은 항상 증가만 하기 때문에 pop할 때 사용하지 않는 front 부분은 메모리가 낭비 됨*  
+    
   - ListNode를 사용해서 한번.
+    ```java
+      public class ListNodeQueue {
+          private ListNode head;
+
+          public ListNodeQueue(){
+              this.head = null;
+          }
+
+          void push(int data){
+              ListNode newNode = new ListNode(data);
+              if(head == null){
+                  head = newNode;
+                  return;
+              }
+
+              ListNode node = head;
+              while(node.next != null)
+                  node = node.next;
+
+              node.next = newNode;
+          }
+
+          int pop(){
+              if(head == null)
+                  throw new RuntimeException("out of index");
+
+              int data = head.data;
+              head = head.next;
+              return data;
+          }
+    }
+    ```
 
