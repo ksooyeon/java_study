@@ -24,9 +24,45 @@
 #### 2. super 키워드
 - 부모 클래스로부터 상속받은 멤버를 참조하는데 사용하는 참조 변수
 - 부모와 자식의 멤버를 구별하는데 사용된다는 점을 제외하고 this와 비슷함
-- 
+- super() 메서드
+  - 부모 클래스의 생성자를 호출할 때 사용
+  - 부모 클래스에 매개변수를 가지는 생성자를 하나라도 선언했다면 부모 클래스에는 자동으로 기본 생성자가 자동 추가되지 않는다
+  - 기본 생성자 없이 자식 클래스에서 super() 메서드 사용시 컴파일 오류  
+  
+```java
+class Parent {
+  int a;
+  Parent() { a = 10; }      // 기본 생성자
+  Parent(int n) { a = n; }  // 매개변수 포함한 생성자
+}
+
+class Child extends Parent {
+  int b;
+  Child() {
+    //super(40);
+    b = 20;
+  }
+  
+  void display() {
+    System.out.println(a);
+    System.out.println(b);
+  }
+  
+  public class Test {
+    public static void main(String[] args) {
+      Child ch = new Child();
+      ch.display();          // 10, 20 (super(40); 주석처리 해제시 40, 20으로 출력)
+    }
+  }
+}
+```  
+
 ------------
 #### 3. 메소드 오버라이딩
+- 부모 클래스로부터 상속받은 메서드를 재정의 하는 것
+- 
+
+
 ------------
 #### 4. 다이나믹 메소드 디스패치 (Dynamic Method Dispatch)
 ------------
