@@ -129,4 +129,161 @@ class Person() {
 ```
 ------------
 #### 5. this 키워드 이해하기
+this : 클래스가 인스턴스화 되었을 때 자기 자신의 메모리 주소를 가지고 있고 이를 나타내는 키워드.  
+(메소드를 통해 넘어온 파라미터의 변수명과 동일할 경우 클래스 내 필드명과 구분해준다)  
+  
+- this()는 클래스 내부에서 생성자를 호출한다.  
+: this()는 호출하는 곳의 첫 번째 문장에서 호출되어야 한다.   
+생성자가 파라미터가 있는 경우 this()안에 생성자 파라미터 타입에 맞게 직접 입력하여 사용할 수 있다.  
+  
+```java
+class Person() {
+  private String name;
+  
+  public Person(String name) {
+    this.name = name;     // 클래스 필드 name = 파라미터 name
+  }
+  
+  public Person(String name) {
+    this(name + "입니다.");
+  }
+}
+```
+-----------------------
+#### 과제 (Optional)
+- int 값을 가지고 있는 이진 트리를 나타내는 Node 라는 클래스를 정의하세요.
+- int value, Node left, right를 가지고 있어야 합니다.
+- BinrayTree라는 클래스를 정의하고 주어진 노드를 기준으로 출력하는 bfs(Node node)와 dfs(Node node) 메소드를 구현하세요.
+- DFS는 왼쪽, 루트, 오른쪽 순으로 순회하세요.
+  
+Node.java
+```java
+public class Node {
+	private int value;
+	private Node left;
+	private Node right;
+	
+	public Node(int value, Node left, Node right) {
+		this.value = value;
+		this.left = left;
+		this.right = right;
+	}
+	
+	public int getValue() {
+		return value;
+	}
 
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+	public Node getLeft() {
+		return left;
+	}
+
+	public void setLeft(Node left) {
+		this.left = left;
+	}
+
+	public Node getRight() {
+		return right;
+	}
+
+	public void setRight(Node right) {
+		this.right = right;
+	}
+}
+```
+  
+BinaryTree.java  
+```java
+import java.util.*;
+
+public class BinaryTree {
+	private Node root;
+	
+	public BinaryTree(Node root) {
+		this.root = root;
+	}
+	
+	public Node getRoot() {
+		return root;
+	}
+	
+	public void BFS(Node root) {
+		Queue<Node> q = new LinkedList<>();
+		
+		q.offer(root);
+		
+		while(!q.isEmpty()) {
+			Node node = q.poll();
+			System.out.print(node.getValue() + " ");
+			
+			if(node.getLeft() != null)
+				q.offer(node.getLeft());
+			if(node.getRight() != null)
+				q.offer(node.getRight());
+		}
+		System.out.println();
+	}
+	
+	public void DFS(Node root) {
+		if(root == null)
+			return;
+		DFS(root.getLeft());
+		System.out.print(root.getValue()+ " ");
+		DFS(root.getRight());
+	}
+}
+```
+  
+BinaryTreeTest.java
+```java
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+class BinaryTreeTest {
+	private static Node root;
+	private static BinaryTree bnTree;
+	
+	@BeforeEach
+	void setUp() throws Exception {                                              //              1  
+		Node node10 = new Node(10, null, null);                                  //         2         3
+		Node node9 = new Node(9, null, null);                                    //      4        5       6
+		Node node8 = new Node(8, node10, null);                                  //   7                 8
+		Node node7 = new Node(7, null, node9);                                   //     9            10
+		Node node6 = new Node(6, node8, null);
+		Node node5 = new Node(5, null, null);
+		Node node4 = new Node(4, node7, null);
+		Node node3 = new Node(3, node5, node6);
+		Node node2 = new Node(2, node4, null);
+		Node node1 = new Node(1, node2, node3);
+		
+		bnTree = new BinaryTree(node1);
+		root = bnTree.getRoot();
+	}
+
+	@Test
+	@DisplayName("root 값 출력")
+	void getRoot() {
+		Assertions.assertEquals(1, bnTree.getRoot().getValue());
+	}
+	
+	@Test
+	@DisplayName("BFS 테스트")
+	void BFS() {
+		bnTree.BFS(root);                         // 1 2 3 4 5 6 7 8 9 10
+	}
+	
+	@Test
+	@DisplayName("DFS 테스트")
+	void DFS() {
+		bnTree.DFS(root);                         // 7 9 4 2 1 5 3 10 8 6
+	}
+
+}
+```
