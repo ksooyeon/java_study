@@ -46,5 +46,150 @@
 - FCFS(FIRST COME FIRST SERVED) 스케줄링 기법
 - RR(ROUND ROBIN) 스케줄링 기법 : 대화형 시스템에 사용
   
-
-
+### 구현 ###
+- 배열을 이용한 원형 큐  
+  
+ArrayQueue.java  
+```java
+public class ArrayQueue {
+	private final int DEFAULT_SIZE = 10000;
+	private int front = 0;
+	private int rear = 0;
+	private Object [] data;
+	
+	//생성자
+	public ArrayQueue() {
+		data = new Object [DEFAULT_SIZE];
+	}
+	
+	//size가 정해진 큐 생성
+	public ArrayQueue(int size) {
+		if(size > 0) {
+			data = new Object [size+1];
+		} else {
+			throw new ArrayIndexOutOfBoundsException();
+		}
+	}
+	
+	public int getSize() {
+		return this.data.length;
+	}
+	
+	public boolean isEmpty() {
+		return rear == front;
+	}
+	
+	public boolean isFull() {
+		return rear+1 % getSize() == front;
+	}
+	
+	public void enqueue(Object input) {
+		if(isFull()) {
+			throw new ArrayIndexOutOfBoundsException();
+		} else {
+			data[++rear % getSize()] = input;  //rear+1 후 데이터 삽입
+		}
+	}
+	
+	public Object dequeue() {
+		if(isEmpty()) {
+			throw new NullPointerException();
+		} else {
+			return data[++front % getSize()];  //front+1 데이터 삭제
+		}
+	}
+	
+	public String toString() {
+		String str = new String("[ ");
+		
+		if(isEmpty()) {
+			return str + "]";
+		} else {
+			for (int i = front+1; i != (rear+1) % getSize(); i = (i+1) % getSize()) {
+				str += data[i] + " ";
+			}
+			return str + "]";
+		}
+	}
+	
+	//큐 데이터 전체 삭제
+	public void clear() {
+		for (int i = front+1; i != (rear+1) % getSize(); i = (i+1) % getSize()) {
+			data[i] = null;
+		}
+		front = 0;
+		rear = 0;
+	}
+}
+```
+  
+- 연결리스트 이용한 큐  
+  
+LinkedListQueue.java
+```java
+public class LinkedListQueue {
+	private QueueNode front = null;
+	private QueueNode rear = null;
+	
+	// LinkedList 내 원소가 될 QueueNode
+	private class QueueNode {
+		private Object data;
+		private QueueNode next;
+		
+		public QueueNode(Object input) {
+			data = input;
+			next = null;
+		}
+		
+		public Object getData() {
+			return this.data;
+		}
+	}
+	
+	public boolean isEmpty() {
+		return front == null;
+	}
+	
+	public void enqueue(Object input) {
+		QueueNode newNode = new QueueNode(input);
+		if(isEmpty()){
+			front = newNode;
+			rear = newNode;
+		}
+		else {
+			rear.next = newNode;
+			rear = newNode;
+		}
+	}
+	
+	public Object dequeue() {
+		if(isEmpty())
+			throw new NullPointerException();
+		else {
+			Object dequeueData = front.data;
+			front = front.next;
+			return dequeueData;
+		}
+	}
+	
+	public String toString() {
+		String str = new String("[");
+		if(isEmpty())
+			return str + "]";
+		else {
+			QueueNode tmp = front;
+			
+			while(tmp.next != null) {
+				str += tmp.getData() + ", ";
+				tmp = tmp.next;
+			}
+			return str + tmp.getData() + "]";
+		}
+	}
+	
+	public void clear() {
+		front = null;
+		rear = null;
+	}
+}
+```
