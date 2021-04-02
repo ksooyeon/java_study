@@ -16,8 +16,8 @@ class Solution {
         while(head != null){
             ListNode tmp = head;    // tmp = 현재 head ListNode로 초기화
             head = head.next;       // head는 다음 노드부터 시작하는 ListNode로 초기화
-            tmp.next = node;        // 뒤로 보낼 tmp의 앞 부분을 node에 저장
-            node = tmp;             // 현재의 tmp를 node로 
+            tmp.next = node;        // tmp의 가장 앞에 있는 노드에 node 노드를 이어붙임(3-> (node) 2->1 ..)
+            node = tmp;             // 현재의 tmp를 node로 (node : 3->2->1->null .. )
         }
         
         return node;
