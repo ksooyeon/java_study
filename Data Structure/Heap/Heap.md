@@ -40,21 +40,21 @@ public static void insertHeap(int[] heap, int size, int item) {  // size=현재 
 - 최대 힙에서의 삭제 : 루트 노드가 삭제된다    
 
 ```java
-public static int deleteHeap(int[] heap, int size, int item) {  // size=현재 heap의 원소 개수
-      if (heapSize == 0) // 배열이 빈 경우
+public static int deleteHeap(int[] heap, int size) {
+      if (size == 0) // 배열이 빈 경우
         return 0;
 
-      int item = maxHeap[1]; // 루트 노드의 값을 저장한다.
-      maxHeap[1] = maxHeap[heapSize]; // 마지막 노드의 값을 루트 노드에 둔다.
-      maxHeap[heapSize--] = 0; // 힙 크기를 하나 줄이고 마지막 노드를 0으로 초기화한다.
+      int item = heap[1]; // 루트 노드의 값을 저장한다.
+      heap[1] = heap[size]; // 마지막 노드의 값을 루트 노드에 둔다.
+      heap[size--] = 0; // 힙 크기를 하나 줄이고 마지막 노드를 0으로 초기화한다.
 
-      for (int i=1; i*2<=heapSize;) {
+      for (int i=1; i*2<=size;) {
         // 마지막 노드가 왼쪽 노드와 오른쪽 노드보다 크면 반복문을 나간다.
-        if (maxHeap[i] > maxHeap[i*2] && maxHeap[i] > maxHeap[i*2+1]) {
+        if (heap[i] > heap[i*2] && heap[i] > heap[i*2+1]) {
           break;
         }
         // 왼쪽 노드가 더 큰 경우, 왼쪽 노드와 마지막 노드를 swap
-        else if (maxHeap[i*2] > maxHeap[i*2+1]) {
+        else if (heap[i*2] > heap[i*2+1]) {
           swap(i, i*2);
           i = i*2;
         }
