@@ -83,3 +83,11 @@ javac -classpath .;C:/JAVA/Engclasses;C:/Java/Hello.java
 
 ------------
 ### 6. 접근지시자
+- 멤버 변수나 메소드들의 접근 범위 정의하기 위해 사용
+  
+지시자|클래스 내부|동일 패키지|하위 클래스|그 외 영역|  
+--------|-----|------|------|------
+public|O|O|O|O
+protected|O|O|O|X
+default(생략가능)|O|O|X|X
+private|O|X|X|X  
