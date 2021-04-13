@@ -91,12 +91,54 @@
   
 ------------
 ### 3. Exception과 Error의 차이는?
-
-
-
-
+- 에러 : 메모리 부족, StackOverFlow 등 시스템에 비정상적인 상황이 생겼을 때 발생하는 System level의 문제. 발생 시 복구 불가능  
+- 예외 : 개발자가 작성한 로직 내에서 발생한 오류. Application level의 문제. 예외 처리 코드 작성으로 방지 가능.  
+  
 ------------
 ### 4. RuntimeException과 RE가 아닌 것의 차이는?
+RE와 RE가 아닌 것을 구분하는 기준 : CheckedException인지 UncheckedException인지로 판단.  
+CheckedException -> 반드시 예외 처리 해줘야 함. UncheckedException -> 예외 처리 강제하지 않음.  
+  
+- RuntimeException
+  * Unchecked Exception
+  * 런타임 시 예외 발생, 실행 전에 컴파일 에러를 발생시키지 않는다.
+  * NullPointerException, IndexOutOfBoundsException, ArithmeticException 등
+  
+- 그 외 클래스(RE가 아닌 것)
+  * Checked Exception
+  * 실행 전 컴파일 단계에서 에러 발생, 반드시 예외 처리를 해줘야 한다.
+  * IOException, SQLException 등
 
 ------------
 ### 5. 커스텀한 예외 만드는 방법
+기존에 정의된 예외 클래스 외 사용자가 직접 커스텀해 예외를 만들어 처리가 가능하다.  
+Exception 클래스 상속받아 사용, 필요에 따라 맞는 예외 클래스를 선택해 사용한다.  
+
+```java
+public class customException extends Exception{
+	customException() {}
+	customException(String msg) {
+		super(msg);
+	}
+}
+
+public class Test {
+	public static void main(String[] args){
+		String val = "1";
+		
+		if(val.equals("1")) {
+			try {
+				throw new customException("makes error");  // 생성자 통해 예외 시 에러메시지 확인 가능
+			}
+			catch(customException e){
+				e.printStackTrace();
+				System.out.println("ERR_MSG : "+e.getMessage());  // Throwable 클래스의 getMessage()를 통해 메시지처리
+			}
+		}
+	}
+}
+
+```
+결과 :   
+![image](https://user-images.githubusercontent.com/34119641/114566812-98194400-9cad-11eb-9d57-b67f59ae73b4.png)  
+
