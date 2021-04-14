@@ -154,10 +154,10 @@ public class Test {
 			rt.join();
 		}
 		catch(InterruptedException e) {
-            e.printStackTrace();
-        }
-    System.out.println("메인 스레드 우선순위 : "+mainThread.getPriority());
-    System.out.println("메인스레드 종료");
+		    e.printStackTrace();
+		}
+	        System.out.println("메인 스레드 우선순위 : "+mainThread.getPriority());
+	        System.out.println("메인스레드 종료");
 	}
 }
 
