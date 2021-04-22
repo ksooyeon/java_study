@@ -53,7 +53,7 @@ java.io 패키지를 이용해 Input/OutputStream을 지원한다.
 ------------
 ### 3. Byte와 Character 스트림
 
-<Byte Stream>
+Byte Stream  
   - 자바의 스트림은 기본적으로 바이트 단위로 스트림 전송
   - 입출력 대상에 따라 제공하는 클래스가 다르다
   - 그림, 멀티미디어, 문자 등 모든 종류의 데이터를 주고 받을 수 있다
@@ -61,8 +61,8 @@ java.io 패키지를 이용해 Input/OutputStream을 지원한다.
   - 메모리 입출력 : ByteArrayInput/OutputStream
   - 프로세스 입출력 : PipedInput/OutputStream
   - 오디오 장치 입출력 : AudioInput/OutputStream 
-  
-<Character Stream>
+    
+Character Stream  
   - 1바이트씩 전송되는 바이트 기반 스트림으로는 원활한 처리가 힘든 경우 존재
   - 이를 해결하기 위해 자바에서 문자 기반 스트림 지원
   - 오직 문자 데이터를 주고받기 위해 존재하는 스트림
