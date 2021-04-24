@@ -20,7 +20,11 @@
 - 자바에서는 파일이나 콘솔에서의 입출력을 스트림을 통해 다룬다.  
 - 한 방향으로만 통신이 가능하므로 입출력을 동시에 처리할 수 없다.  
 - FIFO
-
+- 연속된 데이터의 흐름으로 입출력 진행 시 다른 작업을 할 수 없는 블로킹 상태가 된다.
+  
+자바 NIO(NEW I/O)  
+  - 자바 1.4 버전부터 추가된 API, 넌블로킹 처리가 가능하고 스트림이 아닌 채널을 사용한다.
+  
 버퍼 : byte, char, int 등 기본 데이터 타입을 저장할 수 있는 저장소, 배열처럼 제한된 크기에 순서대로 데이터 저장  
 - 버퍼는 데이터를 저장하기 위한 것이지만, 실제로 버퍼가 사용되는 것은 채널을 통해서 데이터를 주고 받을 때 쓰인다
 - 채널을 통해 소켓, 파일 등에 데이터를 전송할 때나 읽어올 때 버퍼를 사용하게 됨으로써 가비지량 최소화 가능
@@ -95,3 +99,27 @@ public final class System {
 
 ------------
 ### 5. 파일 읽고 쓰기
+- 텍스트 파일인 경우 문자스트림 클래스 사용, 바이너리 파일인 경우 바이트 스트림을 기본적으로 사용한다.
+- 입출력 효율을 위해 Buffered 계열의 보조 스트림을 함께 사용하는 것이 좋다.
+  
+텍스트 파일  
+```java
+BufferedReader br = new BufferedReader(new FileReader("a.txt"));
+BufferedWriter bw = new BufferedWriter(new FileWriter("b.txt"));
+String s;
+while ((s = br.readLine()) != null) {
+    bw.write(s + "\n");
+}
+```
+  
+이진 파일  
+```java
+BufferedInputStream is = new BufferedInputStream(new FileInputStream("a.jpg"));
+BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream("b.jpg"));
+byte[] buffer = new byte[16384];
+while (is.read(buffer) != -1) {
+    os.write(buffer);
+}
+```
+  
+
