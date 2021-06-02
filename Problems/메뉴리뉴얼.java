@@ -11,68 +11,68 @@
 import java.util.*;
 class Solution {
     static int max;
-	static Map<String, Integer> hm;
+    static Map<String, Integer> hm;
     public String[] solution(String[] orders, int[] course) {
         List<String> result = new ArrayList<String>();
-		List<Character> list = new ArrayList<Character>();
-		for(String order : orders) {
-			for(char ch : order.toCharArray()) {
-				if(!list.contains(ch))
-					list.add(ch);
-			}
+	List<Character> list = new ArrayList<Character>();
+	for(String order : orders) {
+		for(char ch : order.toCharArray()) {
+			if(!list.contains(ch))
+				list.add(ch);
 		}
-		Collections.sort(list);
-		boolean[] visited;
-		for(int r : course) {
-			hm = new HashMap<String, Integer>();
-			max = Integer.MIN_VALUE;
-			visited = new boolean[list.size()];
-			comb(list, visited, 0, r, orders, course);
-			for(String key : hm.keySet())
-				if(hm.get(key) == max)
-					result.add(key);
-		}
-		Collections.sort(result);
-		String[] answer = new String[result.size()];
-		for(int i=0;i<result.size();i++)
-			answer[i] = result.get(i);
+	}
+	Collections.sort(list);
+	boolean[] visited;
+	for(int r : course) {
+		hm = new HashMap<String, Integer>();
+		max = Integer.MIN_VALUE;
+		visited = new boolean[list.size()];
+		comb(list, visited, 0, r, orders, course);
+		for(String key : hm.keySet())
+			if(hm.get(key) == max)
+				result.add(key);
+	}
+	Collections.sort(result);
+	String[] answer = new String[result.size()];
+	for(int i=0;i<result.size();i++)
+		answer[i] = result.get(i);
         
         return answer;
     }
     
     public static void comb(List list, boolean[] visited, int start, int r, String[] orders, int[] course) {
-		if(r == 0) {
-			String tmp = "";
-			for(int i=0;i<list.size();i++) {
-				if(visited[i] == true)
-					tmp += list.get(i);
-			}
+	if(r == 0) {
+		String tmp = "";
+		for(int i=0;i<list.size();i++) {
+			if(visited[i] == true)
+				tmp += list.get(i);
+		}
 
-			int count = 0;
-			for(String order : orders) {
-				int count2 = 0;
-				for(String ch : tmp.split("")) {
-					if(!order.contains(ch)) {
-						break;
-					}
-					count2 += 1;
+		int count = 0;
+		for(String order : orders) {
+			int count2 = 0;
+			for(String ch : tmp.split("")) {
+				if(!order.contains(ch)) {
+					break;
 				}
-				if(count2 == tmp.length())
-					count += 1;
+				count2 += 1;
 			}
-			if(count > 1)
-				hm.put(tmp, count);
-			if(count >= max)
-				max = count;
-			return;
+			if(count2 == tmp.length())
+				count += 1;
 		}
-		else {
-			for(int i=start; i<list.size();i++) {
-				visited[i] = true;
-				comb(list, visited, i+1, r-1, orders, course);
-				visited[i] = false;
-			}
+		if(count > 1)
+			hm.put(tmp, count);
+		if(count >= max)
+			max = count;
+		return;
+	}
+	else {
+		for(int i=start; i<list.size();i++) {
+			visited[i] = true;
+			comb(list, visited, i+1, r-1, orders, course);
+			visited[i] = false;
 		}
+	}
 	}
 }
 
